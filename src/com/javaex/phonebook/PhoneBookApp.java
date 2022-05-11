@@ -1,7 +1,9 @@
 package com.javaex.phonebook;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class PhoneBookApp {
 			//메뉴
 			
 			
+			FileWriter fw;
 			switch (num) {
 			case 1: //리스트출력
 				System.out.println();
@@ -77,10 +80,32 @@ public class PhoneBookApp {
 				String hp = sc.nextLine();
 				System.out.print(">회사전화: ");
 				String company = sc.nextLine();
+				//리스트에추가
 				
+				Person person = new Person();
+				person.setName(name);
+				person.setHp(hp);
+				person.setCompany(company);
+				
+				personList.add(person);
+				
+				//파일에 저장
+				fw = new FileWriter("./phoneDB.txt");
+				BufferedWriter bw = new BufferedWriter(fw);
+					
+				for (int i = 0; i < personList.size(); i++) {
+					String str = personList.get(i).getName() + "," + personList.get(i).getHp() + "," + personList.get(i).getCompany();
+					bw.write(str);
+					bw.newLine();
+				}
+				bw.flush();
+				bw.close();
+				
+				System.out.println("등록되었습니다.");
 				
 				break;
 			case 3://삭제
+				
 				
 				break;
 			
