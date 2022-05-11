@@ -105,8 +105,24 @@ public class PhoneBookApp {
 				
 				break;
 			case 3://삭제
+				System.out.println("<3.삭제>");
+				System.out.println(">번호: ");
 				
+				int no = sc.nextInt();
+				personList.remove(no - 1);
 				
+				//파일에 저장
+				fw = new FileWriter("./phoneDB.txt");
+				bw = new BufferedWriter(fw);
+				
+				for (int i = 0; i < personList.size(); i++) {
+					String str = personList.get(i).getName() + "," + personList.get(i).getHp() + "," + personList.get(i).getCompany();
+					bw.write(str);
+					bw.newLine();
+				}
+				bw.flush();
+				bw.close();
+				System.out.println("삭제되었습니다");
 				break;
 			
 			case 4://검색
