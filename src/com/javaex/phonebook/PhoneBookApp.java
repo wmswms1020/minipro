@@ -31,7 +31,7 @@ public class PhoneBookApp {
 
 			if (str == null) {
 				break;
-			
+
 			}
 			String[] personInfo = str.split(",");
 
@@ -42,36 +42,33 @@ public class PhoneBookApp {
 			Person person = new Person(name, hp, company);
 
 			personList.add(person);
-			
-			}
-			boolean flag = true;
-			
-			while (flag) {
+
+		}
+		boolean flag = true;
+
+		while (flag) {
 
 			System.out.println();
 			System.out.println("1.리스트   2.등록   3.삭제   4.검색   5.종료");
 			System.out.println("----------------------------------------------");
 			System.out.print(">메뉴번호: ");
 			int num = sc.nextInt();
-			
-			
-			
-			//메뉴
-			
-			
+
+			// 메뉴
+
 			FileWriter fw;
 			switch (num) {
-			case 1: //리스트출력
+			case 1: // 리스트출력
 				System.out.println();
 				System.out.println("<1.리스트>");
 				System.out.println();
-				
-				for (Person p:personList) {
-					System.out.println(".   "+p.getName()+"   "+p.getHp()+"  "+p.getCompany());
-					
+
+				for (Person p : personList) {
+					System.out.println(".   " + p.getName() + "   " + p.getHp() + "  " + p.getCompany());
+
 				}
 				break;
-			case 2://등록
+			case 2:// 등록
 				System.out.println("<2.등록>");
 				sc.nextLine();
 				System.out.print(">이름: ");
@@ -80,43 +77,45 @@ public class PhoneBookApp {
 				String hp = sc.nextLine();
 				System.out.print(">회사전화: ");
 				String company = sc.nextLine();
-				//리스트에추가
-				
+				// 리스트에추가
+
 				Person person = new Person();
 				person.setName(name);
 				person.setHp(hp);
 				person.setCompany(company);
-				
+
 				personList.add(person);
-				
-				//파일에 저장
+
+				// 파일에 저장
 				fw = new FileWriter("./phoneDB.txt");
 				BufferedWriter bw = new BufferedWriter(fw);
-					
+
 				for (int i = 0; i < personList.size(); i++) {
-					String str = personList.get(i).getName() + "," + personList.get(i).getHp() + "," + personList.get(i).getCompany();
+					String str = personList.get(i).getName() + "," + personList.get(i).getHp() + ","
+							+ personList.get(i).getCompany();
 					bw.write(str);
 					bw.newLine();
 				}
 				bw.flush();
 				bw.close();
-				
+
 				System.out.println("등록되었습니다.");
-				
+
 				break;
-			case 3://삭제
+			case 3:// 삭제
 				System.out.println("<3.삭제>");
 				System.out.println(">번호: ");
-				
+
 				int no = sc.nextInt();
 				personList.remove(no - 1);
-				
-				//파일에 저장
+
+				// 파일에 저장
 				fw = new FileWriter("./phoneDB.txt");
 				bw = new BufferedWriter(fw);
-				
+
 				for (int i = 0; i < personList.size(); i++) {
-					String str = personList.get(i).getName() + "," + personList.get(i).getHp() + "," + personList.get(i).getCompany();
+					String str = personList.get(i).getName() + "," + personList.get(i).getHp() + ","
+							+ personList.get(i).getCompany();
 					bw.write(str);
 					bw.newLine();
 				}
@@ -124,31 +123,41 @@ public class PhoneBookApp {
 				bw.close();
 				System.out.println("삭제되었습니다");
 				break;
-			
-			case 4://검색
-				
+
+			case 4:// 검색
+
+				System.out.println("<4.검색>");
+				System.out.print(">이름: ");
+				String keyword = sc.nextLine();
+
+				for (int i = 0; i < personList.size(); i++) {
+					String serchName = personList.get(i).getName();
+					if (serchName.contains(keyword)) {
+						System.out.print(i + 1 + ".   ");
+						System.out.print(personList.get(i).getName() + "\t");
+						System.out.print(personList.get(i).getHp() + "\t");
+						System.out.print(personList.get(i).getCompany() + "\t");
+						System.out.println("");
+					}
+				}
 				break;
-				
-				
-			case 5://종료
+
+			case 5:// 종료
 				System.out.println("**********************");
 				System.out.println("*   감사합니다   *");
 				System.out.println("**********************");
 				flag = false;
 				break;
-				
-				
-			default://없는메뉴선택햇을때
+
+			default:// 없는메뉴선택햇을때
 				System.out.println("다시 입력해 주세요");
 				break;
 			}
-			
 
 		}
 
 		br.close();
 		sc.close();
-		
-		
+
 	}
 }
